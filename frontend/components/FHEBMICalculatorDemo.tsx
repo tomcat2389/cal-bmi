@@ -63,18 +63,18 @@ export const FHEBMICalculatorDemo = () => {
 
   if (!isConnected) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-neutral-50 flex items-center justify-center p-4">
         <div className="max-w-md w-full">
-          <div className="bg-white rounded-2xl shadow-xl p-8 text-center">
-            <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
-              <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+          <div className="bg-white rounded-lg shadow-sm border border-neutral-200 p-12 text-center">
+            <div className="w-14 h-14 bg-neutral-100 rounded-full flex items-center justify-center mx-auto mb-6">
+              <svg className="w-7 h-7 text-neutral-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
               </svg>
             </div>
-            <h1 className="text-2xl font-bold text-gray-900 mb-4">Privacy BMI Calculator</h1>
-            <p className="text-gray-600 mb-8">Connect your wallet to start using fully privacy-preserving BMI calculation service</p>
+            <h1 className="text-2xl font-semibold text-neutral-900 mb-3 tracking-tight">Privacy BMI Calculator</h1>
+            <p className="text-sm text-neutral-600 mb-8 leading-relaxed">Connect your wallet to start using fully privacy-preserving BMI calculation service</p>
             <button
-              className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-200 transform hover:scale-105 shadow-lg"
+              className="w-full bg-neutral-900 hover:bg-neutral-800 text-white font-medium py-3 px-6 rounded-md transition-colors duration-200"
               onClick={connect}
             >
               Connect MetaMask
@@ -91,40 +91,34 @@ export const FHEBMICalculatorDemo = () => {
 
   const categoryNames = ["Underweight", "Normal", "Overweight"];
   const categoryColors = {
-    0: "text-blue-600 bg-blue-50 border-blue-200",
-    1: "text-green-600 bg-green-50 border-green-200",
-    2: "text-orange-600 bg-orange-50 border-orange-200"
-  };
-  const categoryIcons = {
-    0: "⚖️",
-    1: "✅",
-    2: "⚠️"
+    0: "text-slate-700 bg-slate-50 border-slate-200",
+    1: "text-emerald-700 bg-emerald-50 border-emerald-200",
+    2: "text-amber-700 bg-amber-50 border-amber-200"
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+    <div className="min-h-screen bg-neutral-50">
       {/* Header */}
-      <div className="bg-white shadow-lg">
-        <div className="max-w-4xl mx-auto px-4 py-6">
+      <div className="bg-white border-b border-neutral-200">
+        <div className="max-w-5xl mx-auto px-6 py-8">
           <div className="text-center">
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">🔒 Privacy BMI Calculator</h1>
-            <p className="text-gray-600">Fully privacy-preserving BMI calculation service based on FHEVM</p>
+            <h1 className="text-3xl font-semibold text-neutral-900 mb-2 tracking-tight">Privacy BMI Calculator</h1>
+            <p className="text-sm text-neutral-600">Fully privacy-preserving BMI calculation service based on FHEVM</p>
           </div>
         </div>
       </div>
 
-      <div className="max-w-4xl mx-auto px-4 py-8">
-        <div className="grid gap-8 md:grid-cols-2">
+      <div className="max-w-5xl mx-auto px-6 py-10">
+        <div className="grid gap-6 lg:grid-cols-2">
           {/* Input Section */}
-          <div className="bg-white rounded-2xl shadow-xl p-8">
-            <h2 className="text-xl font-semibold text-gray-900 mb-6 flex items-center">
-              <span className="mr-2">📝</span>
+          <div className="bg-white rounded-lg shadow-sm border border-neutral-200 p-8">
+            <h2 className="text-lg font-semibold text-neutral-900 mb-6">
               Input Information
             </h2>
 
             {/* Height Input */}
             <div className="mb-6">
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-neutral-700 mb-2">
                 Height (cm)
               </label>
               <div className="relative">
@@ -134,17 +128,17 @@ export const FHEBMICalculatorDemo = () => {
                   onChange={(e) => bmiCalculator.setHeight(Number(e.target.value))}
                   min="150"
                   max="250"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-lg"
+                  className="w-full px-4 py-3 border border-neutral-300 rounded-md focus:ring-2 focus:ring-neutral-900 focus:border-neutral-900 transition-all duration-200 text-base bg-white"
                   placeholder="170"
                 />
-                <span className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400">cm</span>
+                <span className="absolute right-4 top-1/2 transform -translate-y-1/2 text-neutral-400 text-sm">cm</span>
               </div>
-              <p className="text-xs text-gray-500 mt-1">Range: 150-250cm</p>
+              <p className="text-xs text-neutral-500 mt-2">Range: 150-250cm</p>
             </div>
 
             {/* Weight Input */}
             <div className="mb-6">
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-neutral-700 mb-2">
                 Weight (kg)
               </label>
               <div className="relative">
@@ -154,70 +148,73 @@ export const FHEBMICalculatorDemo = () => {
                   onChange={(e) => bmiCalculator.setWeight(Number(e.target.value))}
                   min="30"
                   max="200"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-lg"
+                  className="w-full px-4 py-3 border border-neutral-300 rounded-md focus:ring-2 focus:ring-neutral-900 focus:border-neutral-900 transition-all duration-200 text-base bg-white"
                   placeholder="65"
                 />
-                <span className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400">kg</span>
+                <span className="absolute right-4 top-1/2 transform -translate-y-1/2 text-neutral-400 text-sm">kg</span>
               </div>
-              <p className="text-xs text-gray-500 mt-1">Range: 30-200kg</p>
+              <p className="text-xs text-neutral-500 mt-2">Range: 30-200kg</p>
             </div>
 
             {/* Calculate Button */}
             <button
-              className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 disabled:from-gray-400 disabled:to-gray-500 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-200 transform hover:scale-105 disabled:hover:scale-100 shadow-lg disabled:opacity-50"
+              className="w-full bg-neutral-900 hover:bg-neutral-800 disabled:bg-neutral-300 disabled:cursor-not-allowed text-white font-medium py-3.5 px-6 rounded-md transition-colors duration-200"
               disabled={!bmiCalculator.canCalculateBMI}
               onClick={() => bmiCalculator.calculateBMI(bmiCalculator.height, bmiCalculator.weight)}
             >
               {bmiCalculator.isCalculating ? (
                 <div className="flex items-center justify-center">
-                  <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
+                  <svg className="animate-spin h-5 w-5 text-white mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
                   Calculating...
                 </div>
               ) : (
-                "🧮 Calculate BMI"
+                "Calculate BMI"
               )}
             </button>
           </div>
 
           {/* Result Section */}
-          <div className="bg-white rounded-2xl shadow-xl p-8">
-            <h2 className="text-xl font-semibold text-gray-900 mb-6 flex items-center">
-              <span className="mr-2">📊</span>
+          <div className="bg-white rounded-lg shadow-sm border border-neutral-200 p-8">
+            <h2 className="text-lg font-semibold text-neutral-900 mb-6">
               Results
             </h2>
 
             {/* BMI Category Result */}
             {bmiCalculator.category !== undefined ? (
-              <div className={`p-6 rounded-xl border-2 mb-6 ${categoryColors[bmiCalculator.category as keyof typeof categoryColors]}`}>
+              <div className={`p-8 rounded-md border ${categoryColors[bmiCalculator.category as keyof typeof categoryColors]} mb-6`}>
                 <div className="text-center">
-                  <div className="text-4xl mb-3">
-                    {categoryIcons[bmiCalculator.category as keyof typeof categoryIcons]}
-                  </div>
-                  <h3 className="text-2xl font-bold mb-2">
+                  <h3 className="text-2xl font-semibold mb-2">
                     {categoryNames[bmiCalculator.category]}
                   </h3>
-                  <p className="text-sm opacity-75">
-                    BMI Category Result
+                  <p className="text-xs uppercase tracking-wide opacity-70">
+                    BMI Category
                   </p>
                 </div>
               </div>
             ) : bmiCalculator.handle ? (
-              <div className="p-6 rounded-xl border-2 border-gray-200 bg-gray-50 mb-6">
+              <div className="p-8 rounded-md border border-neutral-200 bg-neutral-50 mb-6">
                 <div className="text-center">
-                  <div className="text-4xl mb-3">🔐</div>
-                  <h3 className="text-lg font-semibold text-gray-700 mb-2">
-                    BMI Calculation Complete
+                  <svg className="w-12 h-12 mx-auto mb-4 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                  </svg>
+                  <h3 className="text-base font-semibold text-neutral-700 mb-2">
+                    Calculation Complete
                   </h3>
-                  <p className="text-sm text-gray-600 mb-4">
+                  <p className="text-sm text-neutral-600 mb-4">
                     Your BMI category has been encrypted and stored. Click the button below to view the result.
                   </p>
                 </div>
               </div>
             ) : (
-              <div className="p-6 rounded-xl border-2 border-dashed border-gray-300 bg-gray-50 mb-6">
-                <div className="text-center text-gray-500">
-                  <div className="text-4xl mb-3">📭</div>
-                  <p>Please enter your height and weight, then click calculate</p>
+              <div className="p-8 rounded-md border border-dashed border-neutral-300 bg-neutral-50 mb-6">
+                <div className="text-center text-neutral-500">
+                  <svg className="w-12 h-12 mx-auto mb-4 text-neutral-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                  <p className="text-sm">Please enter your height and weight, then click calculate</p>
                 </div>
               </div>
             )}
@@ -225,111 +222,131 @@ export const FHEBMICalculatorDemo = () => {
             {/* Decrypt Button */}
             {bmiCalculator.handle && !bmiCalculator.isDecrypted && (
               <button
-                className="w-full bg-gradient-to-r from-green-600 to-teal-600 hover:from-green-700 hover:to-teal-700 disabled:from-gray-400 disabled:to-gray-500 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-200 transform hover:scale-105 disabled:hover:scale-100 shadow-lg disabled:opacity-50 mb-4"
+                className="w-full bg-neutral-900 hover:bg-neutral-800 disabled:bg-neutral-300 disabled:cursor-not-allowed text-white font-medium py-3 px-6 rounded-md transition-colors duration-200 mb-3"
                 disabled={!bmiCalculator.canDecryptCategory}
                 onClick={bmiCalculator.decryptBMICategory}
               >
                 {bmiCalculator.isDecrypting ? (
                   <div className="flex items-center justify-center">
-                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                    <svg className="animate-spin h-4 w-4 text-white mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
                     Decrypting...
                   </div>
                 ) : (
-                  "🔓 View BMI Category"
+                  "View BMI Category"
                 )}
               </button>
             )}
 
             {/* Reset Button */}
             <button
-              className="w-full bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold py-2 px-4 rounded-xl transition-all duration-200"
+              className="w-full bg-neutral-100 hover:bg-neutral-200 text-neutral-700 font-medium py-2.5 px-4 rounded-md transition-colors duration-200 border border-neutral-200"
               onClick={bmiCalculator.reset}
             >
-              🔄 Reset
+              Reset
             </button>
           </div>
         </div>
 
         {/* Status Messages */}
         {bmiCalculator.message && (
-          <div className="mt-8 bg-blue-50 border border-blue-200 rounded-xl p-4">
-            <div className="flex items-center">
+          <div className="mt-6 bg-neutral-50 border border-neutral-200 rounded-md p-4">
+            <div className="flex items-start">
               <div className="flex-shrink-0">
-                <svg className="h-5 w-5 text-blue-400" viewBox="0 0 20 20" fill="currentColor">
+                <svg className="h-5 w-5 text-neutral-500 mt-0.5" viewBox="0 0 20 20" fill="currentColor">
                   <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
                 </svg>
               </div>
               <div className="ml-3">
-                <p className="text-sm text-blue-800">{bmiCalculator.message}</p>
+                <p className="text-sm text-neutral-700">{bmiCalculator.message}</p>
               </div>
             </div>
           </div>
         )}
 
         {/* Privacy Info */}
-        <div className="mt-8 bg-gradient-to-r from-purple-50 to-blue-50 border border-purple-200 rounded-xl p-6">
+        <div className="mt-6 bg-neutral-50 border border-neutral-200 rounded-md p-6">
           <div className="flex items-start">
             <div className="flex-shrink-0">
-              <svg className="h-6 w-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+              <svg className="h-5 w-5 text-neutral-600 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
               </svg>
             </div>
             <div className="ml-4">
-              <h3 className="text-lg font-semibold text-purple-900 mb-2">Privacy Protection Notice</h3>
-              <ul className="text-sm text-purple-800 space-y-1">
-                <li>• Your height and weight data is fully encrypted during transmission and calculation</li>
-                <li>• The smart contract can only access encrypted data and cannot view your actual values</li>
-                <li>• Only you can decrypt and view your BMI category result</li>
-                <li>• Your exact BMI value will not be revealed, only the category information (Underweight/Normal/Overweight)</li>
+              <h3 className="text-base font-semibold text-neutral-900 mb-3">Privacy Protection Notice</h3>
+              <ul className="text-sm text-neutral-600 space-y-2 leading-relaxed">
+                <li className="flex items-start">
+                  <span className="mr-2 text-neutral-400">•</span>
+                  <span>Your height and weight data is fully encrypted during transmission and calculation</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="mr-2 text-neutral-400">•</span>
+                  <span>The smart contract can only access encrypted data and cannot view your actual values</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="mr-2 text-neutral-400">•</span>
+                  <span>Only you can decrypt and view your BMI category result</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="mr-2 text-neutral-400">•</span>
+                  <span>Your exact BMI value will not be revealed, only the category information (Underweight/Normal/Overweight)</span>
+                </li>
               </ul>
             </div>
           </div>
         </div>
 
         {/* Technical Details (Collapsible) */}
-        <details className="mt-8 bg-white rounded-xl shadow-lg">
-          <summary className="cursor-pointer p-6 text-lg font-semibold text-gray-900 hover:text-blue-600 transition-colors">
-            🔧 Technical Details
+        <details className="mt-6 bg-white rounded-md border border-neutral-200 shadow-sm">
+          <summary className="cursor-pointer p-5 text-base font-medium text-neutral-900 hover:text-neutral-700 transition-colors list-none">
+            <div className="flex items-center justify-between">
+              <span>Technical Details</span>
+              <svg className="w-5 h-5 text-neutral-400 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
           </summary>
-          <div className="px-6 pb-6 border-t border-gray-200">
-            <div className="grid gap-4 md:grid-cols-2 mt-4">
+          <div className="px-5 pb-5 border-t border-neutral-200">
+            <div className="grid gap-6 md:grid-cols-2 mt-4">
               <div>
-                <h4 className="font-semibold text-gray-900 mb-2">Blockchain Status</h4>
-                <div className="space-y-2 text-sm">
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Network ID:</span>
-                    <span className="font-mono text-gray-900">{chainId}</span>
+                <h4 className="font-medium text-neutral-900 mb-3 text-sm">Blockchain Status</h4>
+                <div className="space-y-2.5 text-sm">
+                  <div className="flex justify-between items-center">
+                    <span className="text-neutral-600">Network ID</span>
+                    <span className="font-mono text-neutral-900 text-xs">{chainId}</span>
                   </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Contract Address:</span>
-                    <span className="font-mono text-gray-900 text-xs break-all">{bmiCalculator.contractAddress}</span>
+                  <div className="flex justify-between items-start">
+                    <span className="text-neutral-600">Contract Address</span>
+                    <span className="font-mono text-neutral-900 text-xs break-all text-right ml-2">{bmiCalculator.contractAddress}</span>
                   </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">FHEVM Status:</span>
-                    <span className={`font-semibold ${fhevmStatus === 'ready' ? 'text-green-600' : 'text-orange-600'}`}>
+                  <div className="flex justify-between items-center">
+                    <span className="text-neutral-600">FHEVM Status</span>
+                    <span className={`font-medium text-xs ${fhevmStatus === 'ready' ? 'text-emerald-600' : 'text-amber-600'}`}>
                       {fhevmStatus}
                     </span>
                   </div>
                 </div>
               </div>
               <div>
-                <h4 className="font-semibold text-gray-900 mb-2">Calculation Status</h4>
-                <div className="space-y-2 text-sm">
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Calculating:</span>
-                    <span className={bmiCalculator.isCalculating ? 'text-orange-600 font-semibold' : 'text-green-600'}>
+                <h4 className="font-medium text-neutral-900 mb-3 text-sm">Calculation Status</h4>
+                <div className="space-y-2.5 text-sm">
+                  <div className="flex justify-between items-center">
+                    <span className="text-neutral-600">Calculating</span>
+                    <span className={bmiCalculator.isCalculating ? 'text-amber-600 font-medium' : 'text-emerald-600'}>
                       {bmiCalculator.isCalculating ? 'Yes' : 'No'}
                     </span>
                   </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Decrypting:</span>
-                    <span className={bmiCalculator.isDecrypting ? 'text-orange-600 font-semibold' : 'text-green-600'}>
+                  <div className="flex justify-between items-center">
+                    <span className="text-neutral-600">Decrypting</span>
+                    <span className={bmiCalculator.isDecrypting ? 'text-amber-600 font-medium' : 'text-emerald-600'}>
                       {bmiCalculator.isDecrypting ? 'Yes' : 'No'}
                     </span>
                   </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Decrypted:</span>
-                    <span className={bmiCalculator.isDecrypted ? 'text-green-600 font-semibold' : 'text-gray-600'}>
+                  <div className="flex justify-between items-center">
+                    <span className="text-neutral-600">Decrypted</span>
+                    <span className={bmiCalculator.isDecrypted ? 'text-emerald-600 font-medium' : 'text-neutral-500'}>
                       {bmiCalculator.isDecrypted ? 'Yes' : 'No'}
                     </span>
                   </div>
