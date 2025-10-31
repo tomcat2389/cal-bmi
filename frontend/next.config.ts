@@ -1,9 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // Only use static export for production builds
-  // Remove this line for development to avoid CORS issues
-  ...(process.env.NODE_ENV === 'production' && { output: 'export' }),
+  // Don't use static export for Vercel deployment
+  // Static export only works for static hosting, Vercel needs server-side rendering
+  // Remove output: 'export' to work properly with Vercel
+  // ...(process.env.NODE_ENV === 'production' && { output: 'export' }),
   trailingSlash: true,
   images: {
     unoptimized: true,
