@@ -11,7 +11,6 @@ import "solidity-coverage";
 import * as dotenv from "dotenv";
 
 import "./tasks/accounts";
-import "./tasks/FHECounter";
 
 // Load environment variables from .env file
 dotenv.config();
