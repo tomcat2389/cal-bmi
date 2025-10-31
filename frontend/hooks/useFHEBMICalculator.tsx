@@ -382,12 +382,17 @@ export const useFHEBMICalculator = (parameters: {
         !sameSigner.current(thisEthersSigner);
 
       try {
+        // Try to load cached signature first
+        // If not found or expired, it will request new signature from MetaMask
+        console.log("[useFHEBMICalculator] Loading or signing decryption signature...");
         const sig: FhevmDecryptionSignature | null =
           await FhevmDecryptionSignature.loadOrSign(
             instance,
             [fheBmiCalculator.address as `0x${string}`],
             ethersSigner,
-            fhevmDecryptionSignatureStorage
+            fhevmDecryptionSignatureStorage,
+            undefined, // keyPair - use generated
+            false // forceResign - set to true to always show MetaMask popup
           );
 
         if (!sig) {
@@ -453,6 +458,29 @@ export const useFHEBMICalculator = (parameters: {
   ]);
 
   /**
+   * Clear cached signature to force re-signing on next decrypt
+   */
+  const clearSignatureCache = useCallback(async () => {
+    if (!fheBmiCalculator.address || !instance || !ethersSigner) {
+      return;
+    }
+
+    try {
+      const userAddress = (await ethersSigner.getAddress()) as `0x${string}`;
+      await FhevmDecryptionSignature.clearSignatureFromStorage(
+        fhevmDecryptionSignatureStorage,
+        instance,
+        [fheBmiCalculator.address],
+        userAddress
+      );
+      setMessage("Signature cache cleared. Next decrypt will request new signature from MetaMask.");
+    } catch (error) {
+      console.warn("Failed to clear signature cache:", error);
+      setMessage("Failed to clear signature cache.");
+    }
+  }, [fheBmiCalculator.address, instance, ethersSigner, fhevmDecryptionSignatureStorage]);
+
+  /**
    * Reset all states for a new calculation
    */
   const reset = useCallback(() => {
@@ -468,6 +496,7 @@ export const useFHEBMICalculator = (parameters: {
     canDecryptCategory,
     calculateBMI,
     decryptBMICategory,
+    clearSignatureCache,
     reset,
     isDecrypted,
     message,

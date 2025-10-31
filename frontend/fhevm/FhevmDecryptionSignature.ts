@@ -240,6 +240,27 @@ export class FhevmDecryptionSignature {
     }
   }
 
+  static async clearSignatureFromStorage(
+    storage: GenericStringStorage,
+    instance: FhevmInstance,
+    contractAddresses: string[],
+    userAddress: string,
+    publicKey?: string
+  ): Promise<void> {
+    try {
+      const storageKey = new FhevmDecryptionSignatureStorageKey(
+        instance,
+        contractAddresses,
+        userAddress,
+        publicKey
+      );
+      await storage.removeItem(storageKey.key);
+      console.log(`[FhevmDecryptionSignature] Cleared signature cache. key=${storageKey.key}`);
+    } catch (error) {
+      console.warn("Failed to clear signature cache:", error);
+    }
+  }
+
   static async loadFromGenericStringStorage(
     storage: GenericStringStorage,
     instance: FhevmInstance,
@@ -265,9 +286,13 @@ export class FhevmDecryptionSignature {
       try {
         const kps = FhevmDecryptionSignature.fromJSON(result);
         if (!kps.isValid()) {
+          // Signature expired, remove it from storage
+          await storage.removeItem(storageKey.key);
+          console.log(`[FhevmDecryptionSignature] Signature expired, removed from cache. Will request new signature. key=${storageKey.key}`);
           return null;
         }
 
+        console.log(`[FhevmDecryptionSignature] Found valid cached signature (no MetaMask popup needed). Signature valid until: ${new Date((kps.startTimestamp + kps.durationDays * 24 * 60 * 60) * 1000).toLocaleString()}`);
         return kps;
       } catch {
         return null;
@@ -297,11 +322,13 @@ export class FhevmDecryptionSignature {
         startTimestamp,
         durationDays
       );
+      console.log("[FhevmDecryptionSignature] Requesting MetaMask signature for off-chain EIP-712 message...");
       const signature = await signer.signTypedData(
         eip712.domain,
         { UserDecryptRequestVerification: eip712.types.UserDecryptRequestVerification },
         eip712.message
       );
+      console.log("[FhevmDecryptionSignature] Signature received from MetaMask");
       return new FhevmDecryptionSignature({
         publicKey,
         privateKey,
@@ -322,23 +349,29 @@ export class FhevmDecryptionSignature {
     contractAddresses: string[],
     signer: ethers.Signer,
     storage: GenericStringStorage,
-    keyPair?: { publicKey: string; privateKey: string }
+    keyPair?: { publicKey: string; privateKey: string },
+    forceResign?: boolean
   ): Promise<FhevmDecryptionSignature | null> {
     const userAddress = (await signer.getAddress()) as `0x${string}`;
 
-    const cached: FhevmDecryptionSignature | null =
-      await FhevmDecryptionSignature.loadFromGenericStringStorage(
+    // If forceResign is true, skip loading from cache
+    let cached: FhevmDecryptionSignature | null = null;
+    if (!forceResign) {
+      cached = await FhevmDecryptionSignature.loadFromGenericStringStorage(
         storage,
         instance,
         contractAddresses,
         userAddress,
         keyPair?.publicKey
       );
+    }
 
     if (cached) {
+      console.log("Using cached signature (no MetaMask popup needed)");
       return cached;
     }
 
+    console.log("No valid cached signature found, will request new signature from MetaMask");
     const { publicKey, privateKey } = keyPair ?? instance.generateKeypair();
 
     const sig = await FhevmDecryptionSignature.new(
