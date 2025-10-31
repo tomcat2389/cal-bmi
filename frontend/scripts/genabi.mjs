@@ -41,15 +41,50 @@ const deploymentsDir = path.join(dir, "deployments");
 // }
 
 function deployOnHardhatNode() {
-  if (process.platform === "win32") {
-    // Not supported on Windows
-    return;
-  }
   try {
-    execSync(`./deploy-hardhat-node.sh`, {
-      cwd: path.resolve("./scripts"),
-      stdio: "inherit",
-    });
+    if (process.platform === "win32") {
+      // On Windows, deploy directly to hardhat network (in-process, no node needed)
+      // Then copy deployment files to localhost directory for compatibility
+      console.log("Compiling contracts...");
+      execSync(`npx hardhat compile`, {
+        cwd: dir,
+        stdio: "inherit",
+      });
+      
+      console.log("Deploying to Hardhat network (Windows)...");
+      execSync(`npx hardhat deploy --network hardhat`, {
+        cwd: dir,
+        stdio: "inherit",
+      });
+      
+      // Copy hardhat deployments to localhost directory for compatibility
+      const hardhatDeployDir = path.join(deploymentsDir, "hardhat");
+      const localhostDeployDir = path.join(deploymentsDir, "localhost");
+      
+      if (fs.existsSync(hardhatDeployDir) && !fs.existsSync(localhostDeployDir)) {
+        console.log("Copying deployment files to localhost directory...");
+        if (!fs.existsSync(deploymentsDir)) {
+          fs.mkdirSync(deploymentsDir, { recursive: true });
+        }
+        fs.mkdirSync(localhostDeployDir, { recursive: true });
+        
+        // Copy all JSON files from hardhat to localhost
+        const files = fs.readdirSync(hardhatDeployDir);
+        files.forEach(file => {
+          if (file.endsWith('.json')) {
+            const sourcePath = path.join(hardhatDeployDir, file);
+            const destPath = path.join(localhostDeployDir, file);
+            fs.copyFileSync(sourcePath, destPath);
+          }
+        });
+      }
+    } else {
+      // Use bash script on Linux/Mac (start node and deploy)
+      execSync(`./deploy-hardhat-node.sh`, {
+        cwd: path.join(process.cwd(), "scripts"),
+        stdio: "inherit",
+      });
+    }
   } catch (e) {
     console.error(`${line}Script execution failed: ${e}${line}`);
     process.exit(1);

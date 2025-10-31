@@ -74,6 +74,14 @@ const config: HardhatUserConfig = {
       },
       chainId: 31337,
     },
+    localhost: {
+      // Localhost network for deploying to local Hardhat node
+      url: "http://127.0.0.1:8545",
+      chainId: 31337,
+      accounts: {
+        mnemonic: MNEMONIC,
+      },
+    },
     anvil: {
       // Anvil can use private key or mnemonic
       accounts: hasPrivateKey
@@ -104,6 +112,7 @@ const config: HardhatUserConfig = {
     cache: "./cache",
     sources: "./contracts",
     tests: "./test",
+    deployments: "./deployments",
   },
   solidity: {
     version: "0.8.27",

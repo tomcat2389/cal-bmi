@@ -138,8 +138,12 @@ export const useFHEBMICalculator = (parameters: {
 
     fheBmiCalculatorRef.current = c;
 
-    if (!c.address) {
+    // Only show error if chainId is defined (wallet connected) but no deployment found
+    if (chainId !== undefined && !c.address) {
       setMessage(`FHEBMICalculator deployment not found for chainId=${chainId}.`);
+    } else if (chainId === undefined) {
+      // Clear message when wallet is not connected
+      setMessage("");
     }
 
     return c;

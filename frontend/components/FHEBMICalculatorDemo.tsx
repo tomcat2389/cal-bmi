@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useFhevm } from "../fhevm/useFhevm";
 import { useInMemoryStorage } from "../hooks/useInMemoryStorage";
 import { useMetaMaskEthersSigner } from "../hooks/metamask/useMetaMaskEthersSigner";
@@ -71,7 +72,7 @@ export const FHEBMICalculatorDemo = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
               </svg>
             </div>
-            <h1 className="text-2xl font-semibold text-neutral-900 mb-3 tracking-tight">Privacy BMI Calculator</h1>
+            <h1 className="text-2xl font-semibold text-neutral-900 mb-3 tracking-tight">Secure BMI Calculator</h1>
             <p className="text-sm text-neutral-600 mb-8 leading-relaxed">Connect your wallet to start using fully privacy-preserving BMI calculation service</p>
             <button
               className="w-full bg-neutral-900 hover:bg-neutral-800 text-white font-medium py-3 px-6 rounded-md transition-colors duration-200"
@@ -95,19 +96,14 @@ export const FHEBMICalculatorDemo = () => {
     1: "text-emerald-700 bg-emerald-50 border-emerald-200",
     2: "text-amber-700 bg-amber-50 border-amber-200"
   };
+  const categoryImages = {
+    0: "/images/bmi-underweight.png",
+    1: "/images/bmi-normal.png",
+    2: "/images/bmi-overweight.png"
+  };
 
   return (
     <div className="min-h-screen bg-neutral-50">
-      {/* Header */}
-      <div className="bg-white border-b border-neutral-200">
-        <div className="max-w-5xl mx-auto px-6 py-8">
-          <div className="text-center">
-            <h1 className="text-3xl font-semibold text-neutral-900 mb-2 tracking-tight">Privacy BMI Calculator</h1>
-            <p className="text-sm text-neutral-600">Fully privacy-preserving BMI calculation service based on FHEVM</p>
-          </div>
-        </div>
-      </div>
-
       <div className="max-w-5xl mx-auto px-6 py-10">
         <div className="grid gap-6 lg:grid-cols-2">
           {/* Input Section */}
@@ -184,26 +180,50 @@ export const FHEBMICalculatorDemo = () => {
 
             {/* BMI Category Result */}
             {bmiCalculator.category !== undefined ? (
-              <div className={`p-8 rounded-md border ${categoryColors[bmiCalculator.category as keyof typeof categoryColors]} mb-6`}>
+              <div 
+                className={`p-10 md:p-12 rounded-lg border-2 ${categoryColors[bmiCalculator.category as keyof typeof categoryColors]} mb-6 transform transition-all duration-500 ease-out animate-[fadeInUp_0.5s_ease-out,gentlePulse_3s_ease-in-out_infinite]`}
+                style={{
+                  animationDelay: '0.1s'
+                }}
+              >
                 <div className="text-center">
-                  <h3 className="text-2xl font-semibold mb-2">
+                  <div className="mb-6 transform transition-all duration-700 ease-out animate-[scaleIn_0.7s_ease-out,bounceIn_1s_ease-out]">
+                    <div className="relative w-64 h-64 md:w-80 md:h-80 mx-auto mb-6 rounded-lg shadow-lg animate-[floatAnimation_3s_ease-in-out_infinite] bg-gradient-to-br from-neutral-50 to-neutral-100 flex items-center justify-center p-4">
+                      <Image
+                        src={categoryImages[bmiCalculator.category as keyof typeof categoryImages]}
+                        alt={`${categoryNames[bmiCalculator.category]} BMI category illustration`}
+                        width={320}
+                        height={320}
+                        className="object-contain transition-all duration-500 hover:scale-110"
+                        style={{
+                          animation: 'imageFadeIn 0.8s ease-out',
+                          maxWidth: '100%',
+                          maxHeight: '100%'
+                        }}
+                        priority
+                      />
+                    </div>
+                  </div>
+                  <h3 className="text-3xl md:text-4xl font-semibold mb-3 transform transition-all duration-700 ease-out animate-[fadeInDown_0.7s_ease-out]">
                     {categoryNames[bmiCalculator.category]}
                   </h3>
-                  <p className="text-xs uppercase tracking-wide opacity-70">
+                  <p className="text-sm md:text-base uppercase tracking-wide opacity-70 transform transition-all duration-700 ease-out animate-[fadeIn_0.7s_ease-out] delay-300">
                     BMI Category
                   </p>
                 </div>
               </div>
             ) : bmiCalculator.handle ? (
-              <div className="p-8 rounded-md border border-neutral-200 bg-neutral-50 mb-6">
+              <div className="p-8 rounded-md border border-neutral-200 bg-neutral-50 mb-6 transform transition-all duration-500 ease-out animate-[fadeInUp_0.5s_ease-out]">
                 <div className="text-center">
-                  <svg className="w-12 h-12 mx-auto mb-4 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                  </svg>
-                  <h3 className="text-base font-semibold text-neutral-700 mb-2">
+                  <div className="animate-pulse">
+                    <svg className="w-12 h-12 mx-auto mb-4 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-base font-semibold text-neutral-700 mb-2 transform transition-all duration-500 ease-out animate-[fadeIn_0.5s_ease-out]">
                     Calculation Complete
                   </h3>
-                  <p className="text-sm text-neutral-600 mb-4">
+                  <p className="text-sm text-neutral-600 mb-4 transform transition-all duration-500 ease-out animate-[fadeIn_0.5s_ease-out] delay-150">
                     Your BMI category has been encrypted and stored. Click the button below to view the result.
                   </p>
                 </div>
@@ -251,7 +271,7 @@ export const FHEBMICalculatorDemo = () => {
         </div>
 
         {/* Status Messages */}
-        {bmiCalculator.message && (
+        {bmiCalculator.message && bmiCalculator.message.trim() !== "" && (
           <div className="mt-6 bg-neutral-50 border border-neutral-200 rounded-md p-4">
             <div className="flex items-start">
               <div className="flex-shrink-0">
@@ -279,19 +299,19 @@ export const FHEBMICalculatorDemo = () => {
               <ul className="text-sm text-neutral-600 space-y-2 leading-relaxed">
                 <li className="flex items-start">
                   <span className="mr-2 text-neutral-400">•</span>
-                  <span>Your height and weight data is fully encrypted during transmission and calculation</span>
+                  <span>Your height and weight are encrypted on your device before being sent to the blockchain</span>
                 </li>
                 <li className="flex items-start">
                   <span className="mr-2 text-neutral-400">•</span>
-                  <span>The smart contract can only access encrypted data and cannot view your actual values</span>
+                  <span>The smart contract processes only encrypted data and never sees your actual measurements</span>
                 </li>
                 <li className="flex items-start">
                   <span className="mr-2 text-neutral-400">•</span>
-                  <span>Only you can decrypt and view your BMI category result</span>
+                  <span>You are the only one who can decrypt and view your BMI category result</span>
                 </li>
                 <li className="flex items-start">
                   <span className="mr-2 text-neutral-400">•</span>
-                  <span>Your exact BMI value will not be revealed, only the category information (Underweight/Normal/Overweight)</span>
+                  <span>We reveal only your BMI category (Underweight, Normal, or Overweight), never your exact BMI value</span>
                 </li>
               </ul>
             </div>

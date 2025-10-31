@@ -1,14 +1,16 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  output: 'export',
+  // Only use static export for production builds
+  // Remove this line for development to avoid CORS issues
+  ...(process.env.NODE_ENV === 'production' && { output: 'export' }),
   trailingSlash: true,
   images: {
     unoptimized: true,
   },
-  headers() {
+  async headers() {
     // Required by FHEVM
-    return Promise.resolve([
+    return [
       {
         source: '/',
         headers: [
@@ -22,8 +24,17 @@ const nextConfig: NextConfig = {
           },
         ],
       },
-    ]);
-  }
+    ];
+  },
+  async rewrites() {
+    // Proxy API requests to avoid CORS issues in development
+    return [
+      {
+        source: '/api/relayer/:path*',
+        destination: 'https://relayer.testnet.zama.cloud/:path*',
+      },
+    ];
+  },
 };
 
 export default nextConfig;
